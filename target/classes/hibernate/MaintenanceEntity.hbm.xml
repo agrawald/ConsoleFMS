@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.fms.entity.MaintenanceEntity" table="Maintenance" catalog="C:\FMS.accdb">
+        <id name="id" column="ID">
+            <generator class="increment"/>
+        </id>
+        <property name="facilityId" column="facilityID"/>
+        <property name="cost" column="cost"/>
+        <property name="startDate" column="startDate"/>
+        <property name="endDate" column="endDate"/>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"
+          p:location="properties/database.properties">
+    </bean>
+
+    <bean id="dataSource"
+          class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="sun.jdbc.odbc.JdbcOdbcDriver"/>
+        <property name="url" value="jdbc:odbc:FMS"/>
+        <property name="username" value="fms"/>
+        <property name="password" value="fms"/>
+    </bean>
+
+    <bean id="sessionFactory"
+          class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+        <property name="dataSource">
+            <ref bean="dataSource"/>
+        </property>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.SQLServerDialect</prop>
+                <prop key="hibernate.show_sql">false</prop>
+                <prop key="hibernate.connection.url">jdbc:odbc:FMS</prop>
+                <prop key="hibernate.connection.driver_class">sun.jdbc.odbc.JdbcOdbcDriver</prop>
+                <prop key="hibernate.connection.username">fms</prop>
+                <prop key="hibernate.connection.password">fms</prop>
+            </props>
+        </property>
+        <property name="mappingDirectoryLocations">
+            <list>
+                <value>hibernate</value>
+            </list>
+        </property>
+    </bean>
+
+    <!-- Beans Declaration -->
+    <bean id="userSvc" class="com.fms.services.impl.UserSvcImpl">
+        <property name="userDao" ref="userDao"/>
+    </bean>
+
+    <bean id="userDao" class="com.fms.dao.impl.UserDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean id="facilitySvc" class="com.fms.services.impl.FacilitySvcImpl">
+        <property name="facilityDao" ref="facilityDao"/>
+    </bean>
+
+    <bean id="facilityDao" class="com.fms.dao.impl.FacilityDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean id="inspectionSvc" class="com.fms.services.impl.InspectionSvcImpl">
+        <property name="inspectionDao" ref="inspectionDao"/>
+    </bean>
+
+    <bean id="inspectionDao" class="com.fms.dao.impl.InspectionDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean id="maintenanceSvc" class="com.fms.services.impl.MaintenanceSvcImpl">
+        <property name="maintenanceDao" ref="maintenanceDao"/>
+    </bean>
+
+    <bean id="maintenanceDao" class="com.fms.dao.impl.MaintenanceDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean id="problemSvc" class="com.fms.services.impl.ProblemSvcImpl">
+        <property name="problemDao" ref="problemDao"/>
+    </bean>
+
+    <bean id="problemDao" class="com.fms.dao.impl.ProblemDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    <bean id="usageSvc" class="com.fms.services.impl.UsageSvcImpl">
+        <property name="usageDao" ref="usageDao"/>
+    </bean>
+
+    <bean id="usageDao" class="com.fms.dao.impl.UsageDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+</beans>
